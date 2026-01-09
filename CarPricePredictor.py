@@ -59,10 +59,11 @@ def main():
                 st.balloons()
                 st.success(f"You can sell your car for ₹{pred[0]:.2f} lakhs.")
             else:
-                st.warning("You might not be able to sell this car.")
+                st.warning("You might not be able to sell this car, because the value is too low")
     except Exception as e:
         st.warning(f"Prediction failed: {e}")
 
 if __name__ == '__main__':
     main()
+
 

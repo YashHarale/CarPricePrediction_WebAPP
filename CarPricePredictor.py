@@ -32,7 +32,7 @@ def main():
     p2 = st.number_input("What is the distance completed by the car in kms?", 100, 500000, step=200)
     s1 = st.selectbox("What is the fuel type of the car?", ('Petrol', 'Diesel', 'CNG'))
     p3 = {'Petrol': 0, 'Diesel': 1, 'CNG': 2}[s1]
-    s2 = st.selectbox("Are you a dealer or individual?", ('Dealer', 'Individual'))
+    s2 = st.selectbox("Are you a dealer or an individual?", ('Dealer', 'Individual'))
     p4 = {'Dealer': 0, 'Individual': 1}[s2]
     s3 = st.selectbox("What is the transmission type?", ('Manual', 'Automatic'))
     p5 = {'Manual': 0, 'Automatic': 1}[s3]
@@ -65,5 +65,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 

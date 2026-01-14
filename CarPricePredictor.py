@@ -25,7 +25,7 @@ def main():
     
     st.markdown(html_temp, unsafe_allow_html=True)
     st.write('')
-    st.markdown("##### Thinking of selling your car? Let's find out what it's worth. Our powerful predictor will give you a quick and accurate evaluation.")
+    st.markdown("##### Thinking of selling your car? Let's find out what it's worth. Our powerful AI will give you a quick and accurate evaluation.")
      
     # User Inputs
     p1 = st.number_input("What is the current ex-showroom price of the car (In lakhs)?", 2.5, step=1.0)
@@ -65,6 +65,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
 

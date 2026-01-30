@@ -6,7 +6,7 @@ import streamlit as st
 def main():
     html_temp = """
      <div style="background-color:lightblue;padding:17px">
-     <h2 style="color:black;text-align:center;">Car Price Prediction Using ML</h2>
+     <h2 style="color:black;text-align:center;">CarWorth: Make Confident Selling Decisions</h2>
      </div>
      """
      
@@ -25,7 +25,7 @@ def main():
     
     st.markdown(html_temp, unsafe_allow_html=True)
     st.write('')
-    st.markdown("##### Thinking of selling your car? Let's find out what it's worth. Our powerful AI will give you a quick and accurate evaluation.")
+    st.markdown("##### Selling your car? Get a fair, data-backed price in seconds to make a confident decision.")
      
     # User Inputs
     p1 = st.number_input("What is the current ex-showroom price of the car (In lakhs)?", 2.5, step=1.0)
@@ -65,6 +65,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
 

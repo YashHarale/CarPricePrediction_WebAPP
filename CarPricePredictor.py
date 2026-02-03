@@ -6,7 +6,6 @@ import os
 st.set_page_config(page_title="CarWorth", layout="centered")
 
 st.title("🚗 CarWorth")
-st.write("Backend started successfully")
 
 # --- Lazy import & model loading ---
 @st.cache_resource
@@ -80,3 +79,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

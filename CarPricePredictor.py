@@ -1,74 +1,82 @@
+import streamlit as st
 import pandas as pd
 import datetime
-import xgboost as xgb
-import streamlit as st
+import os
+
+st.set_page_config(page_title="CarWorth", layout="centered")
+
+st.title("🚗 CarWorth")
+st.write("Backend started successfully")
+
+# --- Lazy import & model loading ---
+@st.cache_resource
+def load_model():
+    import xgboost as xgb
+    model = xgb.Booster()
+    model.load_model("xgb_model.json")
+    return model, xgb
+
 
 def main():
     html_temp = """
-     <div style="background-color:lightblue;padding:17px">
-     <h2 style="color:black;text-align:center;">CarWorth: Make Confident Selling Decisions</h2>
-     </div>
-     """
-     
-    try:
-        # Load the model
-        model = xgb.Booster()
-        model.load_model('xgb_model.json')
-
-        # Convert Booster to XGBRegressor for predictions
-        model_regressor = xgb.XGBRegressor()
-        model_regressor._Booster = model
-
-    except Exception as e:
-        st.error(f"Failed to load model: {e}")
-        return
-    
+    <div style="background-color:lightblue;padding:17px">
+        <h2 style="color:black;text-align:center;">
+            CarWorth: Make Confident Selling Decisions
+        </h2>
+    </div>
+    """
     st.markdown(html_temp, unsafe_allow_html=True)
-    st.write('')
-    st.markdown("##### Selling your car? Get a fair, data-backed price in seconds to make a confident decision")
-     
-    # User Inputs
-    p1 = st.number_input("What is the current ex-showroom price of the car (In lakhs)?", 2.5, step=1.0)
-    p2 = st.number_input("What is the distance completed by the car in kms?", 100, 500000, step=200)
-    s1 = st.selectbox("What is the fuel type of the car?", ('Petrol', 'Diesel', 'CNG'))
-    p3 = {'Petrol': 0, 'Diesel': 1, 'CNG': 2}[s1]
-    s2 = st.selectbox("Are you a dealer or an individual?", ('Dealer', 'Individual'))
-    p4 = {'Dealer': 0, 'Individual': 1}[s2]
-    s3 = st.selectbox("What is the transmission type?", ('Manual', 'Automatic'))
-    p5 = {'Manual': 0, 'Automatic': 1}[s3]
-    p6 = st.slider("Number of owners the car previously had?", 0, 3)
-    date_time = datetime.datetime.now()
-    years = st.number_input("In which year car was purchased?", 1990, date_time.year)
-    p7 = date_time.year - years
-    
-    # Data Preparation
+    st.markdown(
+        "##### Selling your car? Get a fair, data-backed price in seconds."
+    )
+
+    # --- Inputs ---
+    p1 = st.number_input("Ex-showroom price (₹ lakhs)", 2.5, step=1.0)
+    p2 = st.number_input("Distance driven (km)", 100, 500000, step=200)
+
+    s1 = st.selectbox("Fuel type", ("Petrol", "Diesel", "CNG"))
+    p3 = {"Petrol": 0, "Diesel": 1, "CNG": 2}[s1]
+
+    s2 = st.selectbox("Seller type", ("Dealer", "Individual"))
+    p4 = {"Dealer": 0, "Individual": 1}[s2]
+
+    s3 = st.selectbox("Transmission", ("Manual", "Automatic"))
+    p5 = {"Manual": 0, "Automatic": 1}[s3]
+
+    p6 = st.slider("Number of previous owners", 0, 3)
+
+    year_now = datetime.datetime.now().year
+    year_bought = st.number_input("Year of purchase", 1990, year_now)
+    p7 = year_now - year_bought
+
     data_new = pd.DataFrame({
-        'Present_Price': [p1],
-        'Kms_Driven': [p2],
-        'Fuel_Type': [p3],
-        'Seller_Type': [p4],
-        'Transmission': [p5],
-        'Owner': [p6],
-        'Age': [p7]
+        "Present_Price": [p1],
+        "Kms_Driven": [p2],
+        "Fuel_Type": [p3],
+        "Seller_Type": [p4],
+        "Transmission": [p5],
+        "Owner": [p6],
+        "Age": [p7],
     })
-    
-    try:
-        if st.button('Predict'):
-            pred = model_regressor.predict(data_new)
+
+    if st.button("Predict Price"):
+        if not os.path.exists("xgb_model.json"):
+            st.error("Model file not found")
+            return
+
+        try:
+            model, xgb = load_model()
+            dmatrix = xgb.DMatrix(data_new)
+            pred = model.predict(dmatrix)
+
             if pred[0] > 0:
                 st.balloons()
-                st.success(f"You can sell your car for ₹{pred[0]:.2f} lakhs.")
+                st.success(f"Estimated selling price: ₹{pred[0]:.2f} lakhs")
             else:
-                st.warning("You might not be able to sell this car, because the value is too low")
-    except Exception as e:
-        st.warning(f"Prediction failed: {e}")
+                st.warning("Predicted value is very low.")
+        except Exception as e:
+            st.error(f"Prediction failed: {e}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
-
-
-
-
-
-
-

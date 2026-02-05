@@ -7,7 +7,7 @@ st.set_page_config(page_title="CarWorth", layout="centered")
 
 st.title("🚗 CarWorth")
 
-@st.cache_resource
+@st.cache_resource(show_spinner=False)
 def load_model():
     import xgboost as xgb
     model = xgb.Booster()
@@ -78,6 +78,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

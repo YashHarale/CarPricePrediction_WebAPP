@@ -7,7 +7,6 @@ st.set_page_config(page_title="CarWorth", layout="centered")
 
 st.title("🚗 CarWorth")
 
-# --- Lazy import & model loading ---
 @st.cache_resource
 def load_model():
     import xgboost as xgb
@@ -79,5 +78,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 

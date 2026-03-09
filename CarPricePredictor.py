@@ -3,9 +3,9 @@ import pandas as pd
 import datetime
 import os
 
-st.set_page_config(page_title="CarWorth", layout="centered")
+st.set_page_config(page_title="CarVal AI", layout="centered")
 
-st.title("🚗 CarWorth")
+st.title("🚗 CarVal AI")
 
 @st.cache_resource(show_spinner=False)
 def load_model():
@@ -78,6 +78,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

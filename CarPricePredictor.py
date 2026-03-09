@@ -19,7 +19,7 @@ def main():
     html_temp = """
     <div style="background-color:lightblue;padding:17px">
         <h2 style="color:black;text-align:center;">
-            CarWorth: Know your car’s true price with AI
+            CarVal: Know your car’s true price with AI
         </h2>
     </div>
     """
@@ -78,6 +78,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 

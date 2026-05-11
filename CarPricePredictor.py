@@ -59,7 +59,7 @@ def main():
 
     if st.button("Predict Price"):
         if not os.path.exists("xgb_model.json"):
-            st.error("Model file not found")
+            st.error("Model file not found.")
             return
 
         try:

@@ -5,7 +5,7 @@ import os
 
 st.set_page_config(page_title="CarVal AI", layout="centered")
 
-st.title("🚗 CarVal AI")
+st.title("🚗 CarVal AI..")
 
 @st.cache_resource(show_spinner=False)
 def load_model():
